@@ -1,0 +1,28 @@
+{
+  "name": "Ahead-dev-note-taking",
+  "description": "A simple AngularJs application for note taking using node (express)",
+  "main": "server.js",
+  "authors": [
+    "AheadDev (Matt Johnston)"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "AngularJs",
+    "Node",
+    "Express",
+    "Best",
+    "Practice",
+    "Note",
+    "Taking",
+    "Tutorial"
+  ],
+  "homepage": "https://github.com/mjohnston32/AheadDev-Angular-Node",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "bootstrap-sass-official#^3.3.6",
+    "angular": "^1.4.9"
+  }
+}

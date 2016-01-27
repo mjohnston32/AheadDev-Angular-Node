@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Note Taking Website</title>
+</head>
+<body ng-app="myApp">
+	<div ng-controller="viewNotesController as vm">
+		<div ng-repeat="note in vm.notes">
+			<h1>{{note.title}}</h1>
+			<span>By: {{note.author}} </span>
+			<p> {{note.content}} </p>
+		</div>
+	</div>
+
+	<!-- Bower -->
+	<script src="/bower_components/angular/angular.js"></script>
+
+	<!-- App -->
+	<script src="/app/app.js"></script>
+	<script src="/app/modules/viewNotes/viewNotesModule.js"></script>
+	<script src="/app/modules/viewNotes/viewNotesController.js"></script>
+</body>
+</html>
