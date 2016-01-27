@@ -1,7 +1,12 @@
 (function() {
+    // Build Runner
     var gulp = require('gulp');
+
+    // Module Handler (CommonJS / Node)
     var browserify = require('browserify');
     var source = require('vinyl-source-stream');
+
+    // Relies on bower rather than node for dependencies
     var debowerify = require('debowerify');
 
     gulp.task('compile:debug', function() {
