@@ -1,16 +1,14 @@
-(function() {
-    'use strict';
+'use strict';
 
-    angular
-    	.module("viewNotesModule")
-	    .controller("viewNotesController", controller);
+angular
+    .module("viewNotesModule")
+    .controller("viewNotesController", controller);
 
-	    function controller($http, api) {
-	    	var vm = this;
+function controller($http, api, hello) {
+    var vm = this;
 
-	    	$http.get(api + '/api/notes')
-	    	.success(function(response) {
-            	vm.notes = response;
-        	});
-	    }
-}());
+    $http.get(api + '/api/notes')
+    .success(function(response) {
+        vm.notes = response;
+    });
+}

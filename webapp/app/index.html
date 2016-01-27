@@ -5,19 +5,10 @@
 </head>
 <body ng-app="myApp">
 	<div ng-controller="viewNotesController as vm">
-		<div ng-repeat="note in vm.notes">
-			<h1>{{note.title}}</h1>
-			<span>By: {{note.author}} </span>
-			<p> {{note.content}} </p>
-		</div>
+        {{vm.notes}}
 	</div>
 
-	<!-- Bower -->
-	<script src="bower_components/angular/angular.js"></script>
-
 	<!-- App -->
-	<script src="app/app.js"></script>
-	<script src="app/modules/viewNotes/viewNotesModule.js"></script>
-	<script src="app/modules/viewNotes/viewNotesController.js"></script>
+	<script src="app/release.js"></script>
 </body>
 </html>
