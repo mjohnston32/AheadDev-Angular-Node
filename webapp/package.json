@@ -1,0 +1,36 @@
+{
+  "name": "ahead-dev-note-taking",
+  "version": "1.0.0",
+  "description": "A simple AngularJs application for note taking using node (express)",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjohnston32/AheadDev-Angular-Node.git"
+  },
+  "keywords": [
+    "AngularJs",
+    "Node",
+    "Express",
+    "Best",
+    "Practice",
+    "Note",
+    "Taking",
+    "Tutorial"
+  ],
+  "author": "AheadDev (Matt Johnston)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjohnston32/AheadDev-Angular-Node/issues"
+  },
+  "homepage": "https://github.com/mjohnston32/AheadDev-Angular-Node#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}

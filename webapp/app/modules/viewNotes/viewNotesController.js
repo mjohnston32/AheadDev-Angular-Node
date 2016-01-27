@@ -5,10 +5,10 @@
     	.module("viewNotesModule")
 	    .controller("viewNotesController", controller);
 
-	    function controller($http) {
+	    function controller($http, api) {
 	    	var vm = this;
 
-	    	$http.get('/api/notes')
+	    	$http.get(api + '/api/notes')
 	    	.success(function(response) {
             	vm.notes = response;
         	});
