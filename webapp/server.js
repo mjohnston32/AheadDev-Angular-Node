@@ -14,7 +14,7 @@
 	// Routing
 	// Angular Front End
 	app.get('/', function(request, response) {
-		response.sendfile('./app/index.html');
+		response.sendfile('./release/index.html');
 	});
 
 	app.listen(8081);
