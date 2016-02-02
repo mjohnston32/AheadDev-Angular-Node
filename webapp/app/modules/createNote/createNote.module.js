@@ -1,1 +1,1 @@
-angular.module('createNoteModule', []);
+angular.module('createNoteModule', ['commonModule']);

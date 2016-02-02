@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('viewNotesModule', ['ui.router']);
+angular.module('viewNotesModule', ['ui.router', 'commonModule']);

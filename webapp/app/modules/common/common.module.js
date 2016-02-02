@@ -1,1 +1,1 @@
-angular.module('commonModule', []);
+angular.module('commonModule', ['ui.router']);

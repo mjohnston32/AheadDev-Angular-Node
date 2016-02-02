@@ -8,4 +8,5 @@ function routeHelper($state) {
     function navigateTo(route) {
         $state.transitionTo(route);
     }
+
 }

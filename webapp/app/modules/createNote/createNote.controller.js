@@ -23,5 +23,4 @@ function controller(viewNotesService, routeHelper) {
         vm.title = '';
         vm.desc = '';
     }
-
 }

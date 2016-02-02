@@ -13,8 +13,8 @@
         </div>
         <div class="col-lg-4">
             <div class="pull-right" style="margin-top: 5px;">
-                <a class="btn btn-lg btn-info" href="#" role="button">Edit</a>
-                <a class="btn btn-lg btn-danger" href="#" role="button">Delete</a>
+                <a class="btn btn-lg btn-info" role="button" ng-click="vm.editNote(note.noteId)">Edit</a>
+                <a class="btn btn-lg btn-danger" role="button" ng-click="vm.deleteNote(note.noteId)">Delete</a>
             </div>
         </div>
     </div>
