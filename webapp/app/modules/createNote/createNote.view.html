@@ -1,0 +1,15 @@
+<h3>New Note</h3>
+
+<form>
+    <div class="form-group">
+        <label for="input-title">Title</label>
+        <input type="text" class="form-control" id="input-title" placeholder="Title" ng-model="vm.title">
+    </div>
+    <div class="form-group">
+        <label for="input-desc">Description</label>
+        <textarea class="form-control" id="input-desc" placeholder="Enter your note details here" ng-model="vm.desc"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary" ng-click="vm.saveNote()">Save</button>
+    <button class="btn btn-info" ng-click="vm.clearNote()">Clear</button>
+</form>

@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>My Note Taking Website</title>
+	<link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 </head>
+
 <body ng-app="noteTakingApp">
-	<div ng-controller="viewNotesController as vm">
-        {{vm.notes}}
-	</div>
+	<div class="container">
+		<div class="header clearfix">
+			<nav>
+				<ul class="nav nav-pills pull-right">
+					<li role="presentation"><a ui-sref="home">My Notes</a></li>
+					<li role="presentation"><a ui-sref="create">Create Note</a></li>
+					<li role="presentation"><a href="#">Settings</a></li>
+				</ul>
+			</nav>
+			<h3 class="text-muted">My Note Maker</h3>
+		</div>
+
+		<div ui-view></div>
+
+		<footer class="footer">
+			<p>&copy; 2016 Matt Johnston</p>
+		</footer>
+
+	</div> <!-- /container -->
 
 	<!-- App -->
+	<script src="../bower_components/jquery/dist/jquery.js"></script>
+	<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="release/release.js"></script>
+
 </body>
 </html>

@@ -25,6 +25,9 @@
         gulp.src(['./app/assets/**/*'], {base: 'app/assets'})
             .pipe(gulp.dest('./release/assets'));
 
+        gulp.src(['./app/modules/**/*.html'], {base: 'app'})
+            .pipe(gulp.dest('./release'));
+
         // Copy index file
         gulp.src(['./app/index.html'])
             .pipe(gulp.dest('./release'));
