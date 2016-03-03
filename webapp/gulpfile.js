@@ -16,6 +16,10 @@
     var jscs = require('gulp-jscs');
     var jshint = require('gulp-jshint');
 
+    //CSS tools
+    var scss = require('gulp-scss');
+    var cssmin = require('gulp-cssmin');
+
     // Compile project, pull in all assets and html file
     var compile = function(debug) {
         // Clean directory
@@ -30,6 +34,12 @@
 
         // Copy index file
         gulp.src(['./app/index.html'])
+            .pipe(gulp.dest('./release'));
+
+        //Compile SCSS into CSS
+        gulp.src(["./app/**/*.scss", "./app/*.scss"])
+            .pipe(scss())
+            .pipe(cssmin())
             .pipe(gulp.dest('./release'));
 
         // Browserify (concat) files and fix bower dependencies
@@ -56,7 +66,7 @@
 
     // Watch for changes
     gulp.task('watch', function() {
-        gulp.watch(['./app/**/*.js', './app/**/*.html'], ['dev-compile']);
+        gulp.watch(['./app/**/*.js', './app/**/*.html', './app/*.scss'], ['dev-compile']);
     });
 
     // Code quality check (style)
@@ -73,6 +83,14 @@
             .pipe(jshint())
             .pipe(jshint.reporter('jshint-stylish'))
             .pipe(jshint.reporter('fail'));
+    });
+
+    //Compile SCSS into css
+    gulp.task("scss", function () {
+        gulp.src("./app/*.scss")
+            .pipe(scss())
+            .pipe(cssmin())
+            .pipe(gulp.dest('./release'));
     });
 
 }());

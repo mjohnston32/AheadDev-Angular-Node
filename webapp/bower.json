@@ -22,7 +22,9 @@
     "node"
   ],
   "dependencies": {
-    "bootstrap-sass": "bootstrap-sass-official#^3.3.6",
-    "angular": "^1.4.9"
+    "bootstrap-sass": "^3.3.6",
+    "angular": "^1.4.9",
+    "jquery": "^2.2.1",
+    "angular-ui-router": "^0.2.18"
   }
 }
