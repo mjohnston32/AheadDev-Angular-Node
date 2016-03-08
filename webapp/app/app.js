@@ -24,4 +24,3 @@ require('angular-ui-router');
 require('./modules/common/common.dependencies');
 require('./modules/viewNotes/viewNotes.dependencies');
 require('./modules/createNote/createNote.dependencies');
-

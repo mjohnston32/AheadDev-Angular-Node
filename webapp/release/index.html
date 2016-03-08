@@ -3,17 +3,20 @@
 
 <head>
 	<title>My Note Taking Website</title>
-	<link href="libs.css" rel="stylesheet">
+	<link href="index.css" type="text/css" rel="stylesheet">
 </head>
 
 <body ng-app="noteTakingApp">
 	<div class="container">
 		<div class="header clearfix">
-			<nav>
-				<ul class="nav nav-pills pull-right">
-					<li role="presentation"><a ui-sref="home">My Notes</a></li>
-					<li role="presentation"><a ui-sref="create">Create Note</a></li>
-					<li role="presentation"><a href="#">Settings</a></li>
+			<nav class="navbar navbar-default">
+				<a class="navbar-brand" href="#">
+					<img alt="Kainos Smart" src="assets/images/KainosSmart.png">
+				</a>
+				<ul class="nav navbar-nav pull-right">
+					<li><a ui-sref="home">MY NOTES</a></li>
+					<li><a ui-sref="create">CREATE</a></li>
+					<li><a href="#">SETTINGS</a></li>
 				</ul>
 			</nav>
 			<h3 class="text-muted">My Note Maker</h3>

@@ -13,8 +13,7 @@
         concat = require('gulp-concat'),
         util = require('gulp-util'),
         filter = require('gulp-filter'),
-        csso = require('gulp-csso'),
-        browserSync = require('browser-sync').create();;
+        browserSync = require('browser-sync').create();
 
     var argv = require('yargs').argv;
 
@@ -22,8 +21,12 @@
     var jscs = require('gulp-jscs'),
         jshint = require('gulp-jshint');
 
+    //CSS tools
+    var scss = require('gulp-scss');
+    var cssmin = require('gulp-cssmin');
+
     // Build project to release directory
-    gulp.task('compile', ['compileJs', 'copyHtml', 'copyAssets', 'compileLibs'], function() {});
+    gulp.task('compile', ['compileJs', 'copyHtml', 'copyAssets', 'compileLibs', 'scss'], function() {});
 
     // Watch for changes
     gulp.task('watch', function() {
@@ -104,10 +107,13 @@
             .pipe(uglify().on('error', util.log))
             .pipe(concat(config.libsJs))
             .pipe(gulp.dest(config.releaseDir));
+    });
 
-        gulp.src('./bower_components/**/*.css')
-            .pipe(concat(config.libsCss))
-            .pipe(csso())
-            .pipe(gulp.dest(config.releaseDir));
+    //Compile SCSS into css
+    gulp.task("scss", function () {
+        gulp.src("./app/*.scss")
+            .pipe(scss())
+            .pipe(cssmin())
+            .pipe(gulp.dest('./release'));
     });
 }());
