@@ -1,77 +1,48 @@
 (function() {
     // Build Runner
-    var gulp = require('gulp');
-    var del = require('del');
+    var gulp = require('gulp'),
+        config = require('./gulp.config')(),
+        del = require('del');
 
     // Module Handler (CommonJS / Node)
-    var browserify = require('browserify');
-    var source = require('vinyl-source-stream');
-
-    // Relies on bower rather than node for dependencies
-    var debowerify = require('debowerify');
+    var browserify = require('browserify'),
+        source = require('vinyl-source-stream'),
+        debowerify = require('debowerify'),
+        mainBowerFiles = require('gulp-main-bower-files'),
+        uglify = require('gulp-uglify'),
+        concat = require('gulp-concat'),
+        util = require('gulp-util'),
+        filter = require('gulp-filter'),
+        browserSync = require('browser-sync').create();
 
     var argv = require('yargs').argv;
 
     // Quality tools
-    var jscs = require('gulp-jscs');
-    var jshint = require('gulp-jshint');
+    var jscs = require('gulp-jscs'),
+        jshint = require('gulp-jshint');
 
     //CSS tools
     var scss = require('gulp-scss');
     var cssmin = require('gulp-cssmin');
 
-    // Compile project, pull in all assets and html file
-    var compile = function(debug) {
-        // Clean directory
-        del.sync('./release/**');
-
-        // Copy assets
-        gulp.src(['./app/assets/**/*'], {base: 'app/assets'})
-            .pipe(gulp.dest('./release/assets'));
-
-        gulp.src(['./app/modules/**/*.html'], {base: 'app'})
-            .pipe(gulp.dest('./release'));
-
-        // Copy index file
-        gulp.src(['./app/index.html'])
-            .pipe(gulp.dest('./release'));
-
-        //Compile SCSS into CSS
-        gulp.src(["./app/**/*.scss", "./app/*.scss"])
-            .pipe(scss())
-            .pipe(cssmin())
-            .pipe(gulp.dest('./release'));
-
-        // Browserify (concat) files and fix bower dependencies
-        var bundler = browserify({basedir:'./app', debug: debug})
-            .add('app.js')
-            .transform(debowerify);
-
-        // Copy files to release directory
-        return bundler.bundle()
-            .pipe(source('release.js'))
-            .pipe(gulp.dest('./release'));
-    };
-
     // Build project to release directory
-    gulp.task('compile', function() {
-        var debug = !(argv.debug === undefined);
-        return compile(debug);
-    });
-
-    // Build project as debug. Needed for Watcher
-    gulp.task('dev-compile', function() {
-        return compile(true);
-    });
+    gulp.task('compile', ['compileJs', 'copyHtml', 'copyAssets', 'compileLibs', 'scss'], function() {});
 
     // Watch for changes
     gulp.task('watch', function() {
-        gulp.watch(['./app/**/*.js', './app/**/*.html', './app/*.scss'], ['dev-compile']);
+        browserSync.init({
+            server: "./release"
+        });
+
+        gulp.watch(config.appJs, ['compileJs']).on('change', browserSync.reload);
+        gulp.watch(config.appHtml, ['copyHtml']).on('change', browserSync.reload);
+        gulp.watch(config.appAssets, ['copyAssets']).on('change', browserSync.reload);
+        gulp.watch(config.bowerDir, ['compileLibs']).on('change', browserSync.reload);
     });
 
     // Code quality check (style)
     gulp.task('jscs', function() {
-        gulp.src(['./app/**/*.js', './test/**/*.js'])
+        gulp.src([config.appJs, config.testJs])
             .pipe(jscs())
             .pipe(jscs.reporter())
             .pipe(jscs.reporter('fail'));
@@ -79,10 +50,63 @@
 
     // needs fixed
     gulp.task('lint', function() {
-        gulp.src(['./app/**/*.js', './test/**/*.js'])
+        gulp.src([config.appJs, config.testJs])
             .pipe(jshint())
             .pipe(jshint.reporter('jshint-stylish'))
             .pipe(jshint.reporter('fail'));
+    });
+
+    gulp.task('cleanHtml', function() {
+        del(['./app/modules/**/*.html', './app/index.html']);
+    });
+
+    gulp.task('copyHtml', ['cleanHtml'], function() {
+        gulp.src(['./app/modules/**/*.html'], {base: 'app'})
+            .pipe(gulp.dest(config.releaseDir));
+
+        // Copy index file
+        gulp.src(['./app/index.html'])
+            .pipe(gulp.dest(config.releaseDir));
+    });
+
+    gulp.task('cleanJs', function() {
+        del(['./release/app.js']);
+    });
+
+    gulp.task('compileJs', ['cleanJs'], function() {
+        // Browserify (concat) files and fix bower dependencies
+        var bundler = browserify({basedir:'./app', debug: true})
+            .add('app.js')
+            .transform(debowerify);
+
+        // Copy files to release directory
+        return bundler.bundle()
+            .pipe(source('app.js'))
+            .pipe(gulp.dest(config.releaseDir));
+    });
+
+    gulp.task('cleanAssets', function() {
+        del([config.releaseAssets]);
+    });
+
+    gulp.task('copyAssets', ['cleanAssets'], function() {
+        // Copy assets
+        gulp.src([config.appAssets], {base: 'app/assets'})
+            .pipe(gulp.dest(config.releaseAssets));
+    });
+
+    gulp.task('cleanLibs', function() {
+        del(config.libsDir);
+    });
+
+    gulp.task('compileLibs', ['cleanLibs'], function() {
+        var bowerJs = filter('**/*.js');
+        gulp.src(config.bowerJson)
+            .pipe(mainBowerFiles())
+            .pipe(bowerJs)
+            .pipe(uglify().on('error', util.log))
+            .pipe(concat(config.libsJs))
+            .pipe(gulp.dest(config.releaseDir));
     });
 
     //Compile SCSS into css
@@ -92,5 +116,4 @@
             .pipe(cssmin())
             .pipe(gulp.dest('./release'));
     });
-
 }());
